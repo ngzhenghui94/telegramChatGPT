@@ -48,16 +48,17 @@ telegram_conversations = {}
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    value = telegram_conversations.get(update.effective_chat.id, None)
-    print(value)
-    # print(telegram_conversations[update.effective_chat.id])
-    if value is not None:
-        telegram_conversations[update.effective_chat.id] += "Human: " + update.message.text + "\n"
-    else:
-        telegram_conversations[update.effective_chat.id] = "Human: " + update.message.text + "\n"
-    getReply = queryOpenAi(telegram_conversations[update.effective_chat.id])
-    telegram_conversations[update.effective_chat.id] += "AI: " + getReply + "\n"
-    print(telegram_conversations)
+    # value = telegram_conversations.get(update.effective_chat.id, None)
+    # print(value)
+    # # print(telegram_conversations[update.effective_chat.id])
+    # if value is not None:
+    #     telegram_conversations[update.effective_chat.id] += "Human: " + update.message.text + "\n"
+    # else:
+    #     telegram_conversations[update.effective_chat.id] = "Human: " + update.message.text + "\n"
+    # getReply = queryOpenAi(telegram_conversations[update.effective_chat.id])
+    # telegram_conversations[update.effective_chat.id] += "AI: " + getReply + "\n"
+    # print(telegram_conversations)
+    getReply = queryOpenAi(update.message.text)
     await context.bot.send_message(chat_id=update.effective_chat.id, text=getReply)
     await context.bot.send_message(chat_id=myTelegramId, text=update)
 

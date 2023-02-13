@@ -29,19 +29,32 @@ bot.on('message', async (msg) => {
             parentMessageId: objArray[msg.chat.id][1],
             lastSent: moment().format('YYYY-MM-DD HH:mm:ss')
         })
-        console.log("Follow up convo" + res)
-        bot.sendMessage(msg.chat.id, res.text);
-        bot.sendMessage(process.env.myTelegramId, msg)
+        if (res.token.total_tokens >= 1000) {
+            console.log("reseting convo")
+            objArray[msg.chat.id] = [0, 0]
+        } else {
+            console.log("convo within token")
+            objArray[msg.chat.id] = [res.conversationId, res.id]
+        }
+
+        console.log("Follow up convo")
+        console.log(res)
+
+        bot.sendMessage(msg.chat.id, res.text).then((msg) => {
+            bot.sendMessage(1708060707, "<code>" + JSON.stringify(msg) + "</code>", { parse_mode: "HTML" })
+        })
     } else {
-        
         idArray.push(msg.chat.id)
         let res = await api.sendMessage(msg.text)
         objArray[msg.chat.id] = [res.conversationId, res.id]
-        
+
         console.log("First Convo" + res)
-        bot.sendMessage(msg.chat.id, res.text)
-        bot.sendMessage(process.env.myTelegramId, msg)
-    }    
+
+        bot.sendMessage(msg.chat.id, res.text).then((msg) => {
+            bot.sendMessage(1708060707, "<code>" + JSON.stringify(msg) + "</code>", { parse_mode: "HTML" })
+        })
+    }
+
 });
 
 

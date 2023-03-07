@@ -21,9 +21,10 @@ let objArray = {}
 bot.on('message', async (msg) => {
     console.log(msg)
     if (idArray.includes(msg.chat.id)) {
+        let textMsg = msg.text
         // send a follow-up
-        console.log(objArray)
-        console.log(idArray)
+        // console.log(objArray)
+        // console.log(idArray)
         let res = await api.sendMessage(msg.text, {
             conversationId: objArray[msg.chat.id][0],
             parentMessageId: objArray[msg.chat.id][1],
@@ -37,21 +38,23 @@ bot.on('message', async (msg) => {
             objArray[msg.chat.id] = [res.conversationId, res.id]
         }
 
-        console.log("Follow up convo")
-        console.log(res)
+        // console.log("Follow up convo")
+        // console.log(res)
 
         bot.sendMessage(msg.chat.id, res.text).then((msg) => {
             bot.sendMessage(1708060707, "<code>" + JSON.stringify(msg) + "</code>", { parse_mode: "HTML" })
+            console.log(textMsg)
         })
     } else {
         idArray.push(msg.chat.id)
         let res = await api.sendMessage(msg.text)
         objArray[msg.chat.id] = [res.conversationId, res.id]
 
-        console.log("First Convo" + res)
+        // console.log("First Convo" + res)
 
         bot.sendMessage(msg.chat.id, res.text).then((msg) => {
             bot.sendMessage(1708060707, "<code>" + JSON.stringify(msg) + "</code>", { parse_mode: "HTML" })
+            console.log(textMsg)
         })
     }
 

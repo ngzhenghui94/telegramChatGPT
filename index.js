@@ -20,8 +20,8 @@ let objArray = {}
 // Listen for any kind of message. There are different kinds of messages
 bot.on('message', async (msg) => {
     console.log(msg)
+    const textMsg = msg.text
     if (idArray.includes(msg.chat.id)) {
-        const textMsg = msg.text
         // send a follow-up
         // console.log(objArray)
         // console.log(idArray)

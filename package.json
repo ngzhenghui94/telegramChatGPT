@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "chatgpt": "^4.2.0",
+    "chatgpt": "^5.1.2",
     "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.61.0"
   },
